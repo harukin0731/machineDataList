@@ -8,7 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
     "@expo/vector-icons": "^13.0.0",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.7.0",
     "expo": "~45.0.0",
     "expo-cli": "^5.4.3",
     "expo-linking": "~3.1.0",

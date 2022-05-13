@@ -20,6 +20,7 @@ import { useState } from 'react';
 
 import { Button as HoloButton } from "./util/HoloUX/button";
 import { Switch4 } from './util/HoloUX/4.0switch';
+import { Switch44 } from './util/HoloUX/4.4switch';
 
 export default function App() {
 
@@ -78,9 +79,9 @@ export default function App() {
         <HoloButton>
           ほげほげ
         </HoloButton>  
-        <Switch4 flag={testSwitch} onPress={()=>setTestSwitch(!testSwitch)}>
+        <Switch44 flag={testSwitch} onPress={()=>setTestSwitch(!testSwitch)}>
           てすとスイッチ
-        </Switch4>
+        </Switch44>
       </View>
       
       <Card sx={{ minWidth: 275 }}>

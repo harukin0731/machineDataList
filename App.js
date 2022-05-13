@@ -26,7 +26,8 @@ export default function App() {
 
   const [isVisible, setIsVisible] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [testSwitch, setTestSwitch] = useState(false);
+  const [testSwitch1, setTestSwitch1] = useState(false);
+  const [testSwitch2, setTestSwitch2] = useState(false);
 
   const list = (anchor) => (
     <Box
@@ -72,14 +73,17 @@ export default function App() {
         </IconButton>
       </View>
       <Text>testApp</Text>
-      <View style={{width:500,height:500,backgroundColor:"black"}}>
+      <View style={{width:"100%",height:500,backgroundColor:"black"}}>
         <HoloButton>
           てすと
         </HoloButton>  
         <HoloButton>
           ほげほげ
         </HoloButton>  
-        <Switch44 flag={testSwitch} onPress={()=>setTestSwitch(!testSwitch)}>
+        <Switch4 flag={testSwitch1} onPress={()=>setTestSwitch1(!testSwitch1)}>
+          てすとスイッチ
+        </Switch4>
+        <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
           てすとスイッチ
         </Switch44>
       </View>

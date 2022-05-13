@@ -18,6 +18,8 @@ import * as Linking from "expo-linking";
 import { csvText_to_json } from './util/csvText_to_json';
 import { useState } from 'react';
 
+import { Button as HoloButton } from "./util/HoloUX/button";
+
 export default function App() {
 
   const [isVisible, setIsVisible] = useState(false);
@@ -67,6 +69,15 @@ export default function App() {
         </IconButton>
       </View>
       <Text>testApp</Text>
+      <View style={{width:500,height:500,backgroundColor:"black"}}>
+        <HoloButton>
+          てすと
+        </HoloButton>  
+        <HoloButton>
+          ほげほげ
+        </HoloButton>  
+      </View>
+      
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

@@ -19,12 +19,14 @@ import { csvText_to_json } from './util/csvText_to_json';
 import { useState } from 'react';
 
 import { Button as HoloButton } from "./util/HoloUX/button";
+import { Switch4 } from './util/HoloUX/4.0switch';
 
 export default function App() {
 
   const [isVisible, setIsVisible] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  
+  const [testSwitch, setTestSwitch] = useState(false);
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -76,6 +78,9 @@ export default function App() {
         <HoloButton>
           ほげほげ
         </HoloButton>  
+        <Switch4 flag={testSwitch} onPress={()=>setTestSwitch(!testSwitch)}>
+          てすとスイッチ
+        </Switch4>
       </View>
       
       <Card sx={{ minWidth: 275 }}>

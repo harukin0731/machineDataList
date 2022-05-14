@@ -6,7 +6,7 @@ export function TitleBar(props){
     return(
         <View style={{width:"100%"}}>
             <View style={{flexDirection:"row",flex:1,alignContent:"center",padding:10}}>
-                <Image style={{width:"2rem",height:"2rem"}} />
+                <Image style={{width:"2rem",height:"2rem", marginLeft:10}} />
                 <Text style={{color:"white", fontSize:"2rem"}}>{title}</Text>
                 <View style={{flex:1}} />
                 {rightContent}

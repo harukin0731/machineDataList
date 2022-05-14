@@ -21,6 +21,8 @@ import { useState } from 'react';
 import { Button as HoloButton } from "./util/HoloUX/button";
 import { Switch4 } from './util/HoloUX/4.0switch';
 import { Switch44 } from './util/HoloUX/4.4switch';
+import { HorizonalBar } from './util/HoloUX/horizonalBar';
+import { TitleBar } from './util/HoloUX/titleBar';
 
 export default function App() {
 
@@ -65,30 +67,41 @@ export default function App() {
   return (
     <SafeAreaProvider style={{ backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',width:"100%", height:"100%"}}>
       <ScrollView style={{ width:"100%", height:300}} >
-        <View style={{width:"100%",height:60,backgroundColor:"#00E8E3",flexDirection:"row"}}>
-          <View style={{flex:1}} />
-          <Text>てすと</Text>
-          <View style={{flex:1}} />
-          <IconButton aria-label="delete" size="large" onClick={()=>setDrawer(true)}>
-            <DehazeIcon fontSize="inherit" />
-          </IconButton>
-        </View>
-        <Text>testApp</Text>
-        <View style={{width:"100%",height:500,backgroundColor:"black"}}>
+        <View style={{width:"100%",backgroundColor:"black"}}>
+          <TitleBar title="にゃーん" />
           <HoloButton>
             てすと
           </HoloButton>  
+          <HorizonalBar height={3} padding={20} />
           <HoloButton>
             ほげほげ
           </HoloButton>  
+          <HorizonalBar />
           <Switch4 flag={testSwitch1} onPress={()=>setTestSwitch1(!testSwitch1)}>
             てすとスイッチ
           </Switch4>
           <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
             てすとスイッチ
           </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
         </View>
         
+        
+        <Text>testApp</Text>
         <Card sx={{ minWidth: 275 }}>
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -154,10 +167,13 @@ export default function App() {
         >{list("right")}
         </SwipeableDrawer>
       </ScrollView>
-      <View style={{width:"100%",height:100}}>
-        <Text>ほげほげ</Text>
-        <Text>ほげほげ</Text>
-        <Text>ほげほげ</Text>
+      <View style={{width:"100%",height:60,backgroundColor:"#00E8E3",flexDirection:"row"}}>
+        <View style={{flex:1}} />
+        <Text>Holoデザインだよ</Text>
+        <View style={{flex:1}} />
+        <IconButton aria-label="delete" size="large" onClick={()=>setDrawer(true)}>
+          <DehazeIcon fontSize="inherit" />
+        </IconButton>
       </View>
     </SafeAreaProvider>
   );

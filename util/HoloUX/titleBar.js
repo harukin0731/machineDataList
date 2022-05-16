@@ -4,7 +4,7 @@ import { HorizonalBar } from "./horizonalBar";
 export function TitleBar(props){
     const {title, icon, rightContent} = props;
     return(
-        <View style={{width:"100%"}}>
+        <View style={{width:"100%", userSelect:"none" }}>
             <View style={{flexDirection:"row",flex:1,alignContent:"center",padding:10}}>
                 <Image style={{width:"2rem",height:"2rem", marginLeft:10}} />
                 <Text style={{color:"white", fontSize:"2rem"}}>{title}</Text>

@@ -66,8 +66,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider style={{ backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',width:"100%", height:"100%"}}>
-      <ScrollView style={{ width:"100%", height:300}} >
-        <View style={{width:"100%",backgroundColor:"black"}}>
+      <ScrollView style={{ width:"100%", height:300,backgroundColor:"black"}} >
           <TitleBar title="にゃーん" />
           <HoloButton>
             てすと
@@ -80,6 +79,13 @@ export default function App() {
           <Switch4 flag={testSwitch1} onPress={()=>setTestSwitch1(!testSwitch1)}>
             てすとスイッチ
           </Switch4>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)} off={"にゃーんにゃーん"} on={"ほげほげ"} >
+            てすとてすと
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
+            てすとスイッチ
+          </Switch44>
+          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}/>
           <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
             てすとスイッチ
           </Switch44>
@@ -89,16 +95,6 @@ export default function App() {
           <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
             てすとスイッチ
           </Switch44>
-          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
-            てすとスイッチ
-          </Switch44>
-          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
-            てすとスイッチ
-          </Switch44>
-          <Switch44 flag={testSwitch2} onPress={()=>setTestSwitch2(!testSwitch2)}>
-            てすとスイッチ
-          </Switch44>
-        </View>
         
         
         <Text>testApp</Text>

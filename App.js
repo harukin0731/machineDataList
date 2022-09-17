@@ -35,7 +35,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import xmlToJSON from "xmltojson";
 import * as Linking from "expo-linking";
 import { csvText_to_json } from "./util/csvText_to_json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button as HoloButton } from "./util/HoloUX/button";
 import { Switch4 } from "./util/HoloUX/4.0switch";
@@ -51,7 +51,9 @@ export default function App() {
   const [bottomSheet, setBottomSheet] = useState(false);
   const [testSwitch1, setTestSwitch1] = useState(false);
   const [testSwitch2, setTestSwitch2] = useState(false);
-
+  useEffect(() => {
+    postMessage("ほげ！", "https://haruk.in");
+  }, []);
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}

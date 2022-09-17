@@ -52,7 +52,8 @@ export default function App() {
   const [testSwitch1, setTestSwitch1] = useState(false);
   const [testSwitch2, setTestSwitch2] = useState(false);
   useEffect(() => {
-    postMessage("ほげ！", "https://harukin-gadget-page.netlify.app");
+    window.parent.postMessage("ほげ！！", "*");
+    console.log("postメッセージしたよ.0");
   }, []);
   const list = (anchor) => (
     <Box

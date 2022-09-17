@@ -164,7 +164,10 @@ export default function App() {
         <IconButton
           aria-label="delete"
           size="large"
-          onClick={() => Linking.openURL("https://haruk.in/")}
+          onClick={() => {
+            window.parent.postMessage("doCloseAction", "*");
+            console.log("アプリを閉じて前に戻る");
+          }}
         >
           <ArrowBack fontSize="inherit" />
         </IconButton>

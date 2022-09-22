@@ -65,7 +65,9 @@ export default function App() {
   useEffect(() => {
     window.parent.postMessage("ほげ！！", "*");
     console.log("postメッセージしたよ.0");
-    fetch("https://nexcloud.haruk.in/s/Xxnw4PMBQYceErg/download/main.md")
+    fetch("https://nexcloud.haruk.in/s/Xxnw4PMBQYceErg/download/main.md", {
+      mode: "cors",
+    })
       .then((d) => d.text())
       .then((d) => setMD(d));
   }, []);

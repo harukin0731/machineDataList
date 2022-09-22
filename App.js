@@ -25,6 +25,7 @@ import {
   Box,
   Divider,
 } from "@mui/material";
+import Markdown from "react-native-markdown-renderer";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -45,15 +46,28 @@ import { TitleBar } from "./util/HoloUX/titleBar";
 import { Slider } from "./util/HoloUX/slider";
 import { AllInbox, ArrowBack } from "@mui/icons-material";
 
+import { styles } from "./styles/styles";
+const copy = `# h1 Heading 8-)
+
+| Option | Description |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+`;
 export default function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
   const [testSwitch1, setTestSwitch1] = useState(false);
   const [testSwitch2, setTestSwitch2] = useState(false);
+  const [md, setMD] = useState("");
   useEffect(() => {
     window.parent.postMessage("ほげ！！", "*");
     console.log("postメッセージしたよ.0");
+    fetch("https://nexcloud.haruk.in/s/Xxnw4PMBQYceErg/download/main.md")
+      .then((d) => d.text())
+      .then((d) => setMD(d));
   }, []);
   const list = (anchor) => (
     <Box
@@ -99,7 +113,7 @@ export default function App() {
       }}
     >
       <ScrollView
-        style={{ width: "100%", height: 300, backgroundColor: "#F2F2F2" }}
+        style={{ width: "100%", height: 300, backgroundColor: "#2E3436" }}
       >
         <View style={{ width: "100%", display: "flex", flexDirection: "row" }}>
           <View style={{ flex: 1 }} />
@@ -120,15 +134,32 @@ export default function App() {
                 margin: 10,
               }}
             />
-            <Text style={{ fontSize: 50, textAlign: "center" }}>
+            <Text style={{ fontSize: 50, textAlign: "center", color: "white" }}>
               Welcome to harukin Machine Data List System
             </Text>
-            <Text style={{ fontSize: 20, textAlign: "center", paddingTop: 30 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                textAlign: "center",
+                paddingTop: 30,
+                color: "white",
+              }}
+            >
               ここははるきんの秘密基地。はるきんの持ってるよくわからないハードウェア達をご紹介。
             </Text>
-            <Text style={{ fontSize: 20, textAlign: "center", paddingTop: 30 }}>
-              現在作成中....
+            <Text
+              style={{
+                fontSize: 20,
+                textAlign: "center",
+                paddingTop: 30,
+                color: "white",
+              }}
+            >
+              ここの項目はnextcloudを経由して自動で更新されます。
             </Text>
+            <View style={{ height: 20 }} />
+
+            <Markdown style={styles}>{md}</Markdown>
           </View>
           <View style={{ flex: 1 }} />
         </View>

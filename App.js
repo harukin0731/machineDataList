@@ -4,6 +4,17 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
 //import { Button, BottomSheet, ListItem, Header } from 'react-native-elements';
 
+import CardMedia from "@mui/material/CardMedia";
+import { CardActionArea } from "@mui/material";
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import {
   Card,
   CardActions,
@@ -62,6 +73,8 @@ export default function App() {
   const [testSwitch1, setTestSwitch1] = useState(false);
   const [testSwitch2, setTestSwitch2] = useState(false);
   const [md, setMD] = useState("");
+  const [deviceList, setDeviceList] = useState([]);
+  const [deviceListTag, setDeviceListTag] = useState([]);
   useEffect(() => {
     window.parent.postMessage("ほげ！！", "*");
     console.log("postメッセージしたよ.0");
@@ -71,6 +84,25 @@ export default function App() {
       .then((d) => d.text())
       .then((d) => setMD(d));
   }, []);
+  useEffect(() => {
+    fetch("https://nexcloud.haruk.in/s/LTFeAq22PgXy5ms/download/mainList.csv", {
+      mode: "cors",
+    })
+      .then((d) => d.text())
+      .then((d) => csvText_to_json(d))
+      .then(setDeviceList);
+  }, []);
+  useEffect(() => {
+    setDeviceListTag([
+      "All",
+      ...new Set(
+        deviceList
+          .map((d) => d.type)
+          .join("/")
+          .split("/")
+      ),
+    ]);
+  }, [deviceList]);
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -179,8 +211,10 @@ export default function App() {
           open={bottomSheet}
           onClose={() => setBottomSheet(false)}
           onOpen={() => setBottomSheet(true)}
+          onScroll={() => console.log("scroll")}
+          style={{ height: "80vh" }}
         >
-          {list("right")}
+          <BasicTabs deviceListTag={deviceListTag} deviceList={deviceList} />
         </SwipeableDrawer>
       </ScrollView>
       <View
@@ -222,5 +256,112 @@ export default function App() {
         </IconButton>
       </View>
     </SafeAreaProvider>
+  );
+}
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+function BasicTabs(props) {
+  const { deviceList, deviceListTag } = props;
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <View style={{ height: "90vh", width: "100%" }}>
+      <ScrollView
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            wp("100%") > 1200
+              ? "1fr 1fr 1fr 1fr 1fr"
+              : wp("100%") > 1000
+              ? "1fr 1fr 1fr 1fr"
+              : wp("100%") > 800
+              ? "1fr 1fr 1fr"
+              : wp("100%") > 600
+              ? "1fr 1fr"
+              : "1fr",
+        }}
+      >
+        {deviceList
+          .filter((d) => {
+            if (deviceListTag[value] == "All") return true;
+            return d.type.indexOf(deviceListTag[value]) == -1 ? false : true;
+          })
+          .map((d) => (
+            <MultiActionAreaCard data={d} />
+          ))}
+      </ScrollView>
+
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+        variant="fullWidth"
+      >
+        {deviceListTag.map((value, index) => {
+          return <Tab label={value} {...a11yProps(index)} />;
+        })}
+      </Tabs>
+    </View>
+  );
+}
+
+export function MultiActionAreaCard(props) {
+  const { data } = props;
+  console.log(data);
+  return (
+    <Card style={{ margin: 10, height: 450 }}>
+      <CardActionArea>
+        <CardMedia component="img" height="140" image={data.image} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {data.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {data.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Visit
+        </Button>
+      </CardActions>
+    </Card>
   );
 }

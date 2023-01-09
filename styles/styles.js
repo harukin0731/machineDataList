@@ -123,5 +123,5 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   u: { color: "white", borderColor: "#000000", borderBottomWidth: 1 },
-  image: { color: "white", flex: 1 },
+  image: { color: "white" },
 });

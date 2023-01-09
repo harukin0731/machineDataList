@@ -131,7 +131,7 @@ function BasicTabs(props) {
   };
 
   return (
-    <View style={{ height: "80vh" }}>
+    <View style={{ maxHeight: "80vh" }}>
       <ScrollView
         onScroll={(event) => {
           //console.log(event);
@@ -185,7 +185,7 @@ export function MultiActionAreaCard(props) {
   const { data } = props;
   console.log(data);
   return (
-    <View>
+    <View style={{ maxWidth: 400 }}>
       <Card style={{ margin: 10 }} onClick={() => console.log("hoge")}>
         <CardActionArea>
           <CardMedia component="img" height="140" image={data.image} />

@@ -142,16 +142,7 @@ function BasicTabs(props) {
           style={{
             width: "100%",
             display: "grid",
-            gridTemplateColumns:
-              wp("100%") > 1200
-                ? "1fr 1fr 1fr 1fr 1fr"
-                : wp("100%") > 1000
-                ? "1fr 1fr 1fr 1fr"
-                : wp("100%") > 800
-                ? "1fr 1fr 1fr"
-                : wp("100%") > 600
-                ? "1fr 1fr"
-                : "1fr",
+            gridTemplateColumns: "repeat( auto-fill, minmax(300px,1fr) )",
             height: "auto",
           }}
         >
@@ -185,7 +176,7 @@ export function MultiActionAreaCard(props) {
   const { data } = props;
   console.log(data);
   return (
-    <View style={{ maxWidth: 400 }}>
+    <View style={{ maxWidth: 400, minWidth: 300 }}>
       <Card style={{ margin: 10 }} onClick={() => console.log("hoge")}>
         <CardActionArea>
           <CardMedia component="img" height="140" image={data.image} />

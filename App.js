@@ -15,6 +15,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import ActionSheet, {
+  useScrollHandlers,
+  ActionSheetRef,
+  SheetProps,
+} from "react-native-actions-sheet";
 import {
   Card,
   CardActions,
@@ -47,7 +52,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import xmlToJSON from "xmltojson";
 import * as Linking from "expo-linking";
 import { csvText_to_json } from "./util/csvText_to_json";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { Button as HoloButton } from "./util/HoloUX/button";
 import { Switch4 } from "./util/HoloUX/4.0switch";
@@ -58,6 +63,7 @@ import { Slider } from "./util/HoloUX/slider";
 import { AllInbox, ArrowBack } from "@mui/icons-material";
 
 import { styles } from "./styles/styles";
+import { DeviceSelectSheet } from "./components/DeviceSelectSheet";
 const copy = `# h1 Heading 8-)
 
 | Option | Description |
@@ -75,6 +81,8 @@ export default function App() {
   const [md, setMD] = useState("");
   const [deviceList, setDeviceList] = useState([]);
   const [deviceListTag, setDeviceListTag] = useState([]);
+  const acRef = useRef(null);
+  const scrollHandlers = useScrollHandlers("scrollview-1", acRef);
   useEffect(() => {
     window.parent.postMessage("ほげ！！", "*");
     console.log("postメッセージしたよ.0");
@@ -213,10 +221,14 @@ export default function App() {
           onOpen={() => setBottomSheet(true)}
           onScroll={() => console.log("scroll")}
           style={{ height: "80vh" }}
-        >
-          <BasicTabs deviceListTag={deviceListTag} deviceList={deviceList} />
-        </SwipeableDrawer>
+        ></SwipeableDrawer>
       </ScrollView>
+      <DeviceSelectSheet
+        acRef={acRef}
+        deviceListTag={deviceListTag}
+        deviceList={deviceList}
+        scrollHandlers={scrollHandlers}
+      />
       <View
         style={{
           width: "100%",
@@ -242,7 +254,7 @@ export default function App() {
         <IconButton
           aria-label="delete"
           size="large"
-          onClick={() => setBottomSheet(true)}
+          onClick={acRef.current?.setModalVisible}
         >
           <AllInbox fontSize="inherit" />
         </IconButton>
@@ -256,112 +268,5 @@ export default function App() {
         </IconButton>
       </View>
     </SafeAreaProvider>
-  );
-}
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-function BasicTabs(props) {
-  const { deviceList, deviceListTag } = props;
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <View style={{ height: "90vh", width: "100%" }}>
-      <ScrollView
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            wp("100%") > 1200
-              ? "1fr 1fr 1fr 1fr 1fr"
-              : wp("100%") > 1000
-              ? "1fr 1fr 1fr 1fr"
-              : wp("100%") > 800
-              ? "1fr 1fr 1fr"
-              : wp("100%") > 600
-              ? "1fr 1fr"
-              : "1fr",
-        }}
-      >
-        {deviceList
-          .filter((d) => {
-            if (deviceListTag[value] == "All") return true;
-            return d.type.indexOf(deviceListTag[value]) == -1 ? false : true;
-          })
-          .map((d) => (
-            <MultiActionAreaCard data={d} />
-          ))}
-      </ScrollView>
-
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="basic tabs example"
-        variant="fullWidth"
-      >
-        {deviceListTag.map((value, index) => {
-          return <Tab label={value} {...a11yProps(index)} />;
-        })}
-      </Tabs>
-    </View>
-  );
-}
-
-export function MultiActionAreaCard(props) {
-  const { data } = props;
-  console.log(data);
-  return (
-    <Card style={{ margin: 10, height: 450 }}>
-      <CardActionArea>
-        <CardMedia component="img" height="140" image={data.image} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {data.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {data.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Visit
-        </Button>
-      </CardActions>
-    </Card>
   );
 }

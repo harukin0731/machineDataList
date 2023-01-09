@@ -176,8 +176,8 @@ export function MultiActionAreaCard(props) {
   const { data } = props;
   console.log(data);
   return (
-    <View style={{ maxWidth: 400, minWidth: 300 }}>
-      <Card style={{ margin: 10 }} onClick={() => console.log("hoge")}>
+    <View style={{ maxWidth: 600, minWidth: 270, margin: 15 }}>
+      <Card onClick={() => console.log("hoge")}>
         <CardActionArea>
           <CardMedia component="img" height="140" image={data.image} />
           <CardContent>

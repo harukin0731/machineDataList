@@ -50,7 +50,7 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import MailIcon from "@mui/icons-material/Mail";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 export const DeviceSelectSheet = (props) => {
-  const { acRef, deviceListTag, deviceList, scrollHandlers } = props;
+  const { acRef, deviceListTag, deviceList, scrollHandlers, control } = props;
   console.log(acRef);
   const [isScrollTop, setIsScrollTop] = useState(true);
   return (
@@ -82,6 +82,8 @@ export const DeviceSelectSheet = (props) => {
         deviceList={deviceList}
         scrollState={{ isScrollTop, setIsScrollTop }}
         scrollHandlers={scrollHandlers}
+        control={control}
+        acRef={acRef}
       />
     </ActionSheet>
   );
@@ -121,7 +123,14 @@ function a11yProps(index) {
 }
 
 function BasicTabs(props) {
-  const { deviceList, deviceListTag, scrollState, scrollHandlers } = props;
+  const {
+    deviceList,
+    deviceListTag,
+    scrollState,
+    scrollHandlers,
+    control,
+    acRef,
+  } = props;
   const { isScrollTop, setIsScrollTop } = scrollState;
   const [value, setValue] = React.useState(0);
 
@@ -142,7 +151,7 @@ function BasicTabs(props) {
           style={{
             width: "100%",
             display: "grid",
-            gridTemplateColumns: "repeat( auto-fill, minmax(300px,1fr) )",
+            gridTemplateColumns: "repeat( auto-fill, minmax(250px,1fr) )",
             height: "auto",
           }}
         >
@@ -152,7 +161,7 @@ function BasicTabs(props) {
               return d.type.indexOf(deviceListTag[value]) == -1 ? false : true;
             })
             .map((d) => (
-              <MultiActionAreaCard data={d} />
+              <MultiActionAreaCard data={d} control={control} acRef={acRef} />
             ))}
         </View>
       </ScrollView>
@@ -173,11 +182,21 @@ function BasicTabs(props) {
 }
 
 export function MultiActionAreaCard(props) {
-  const { data } = props;
+  const { data, control, acRef } = props;
+  const { device, setDevice } = control;
   console.log(data);
   return (
-    <View style={{ maxWidth: 600, minWidth: 270, margin: 15 }}>
-      <Card onClick={() => console.log("hoge")}>
+    <View style={{ maxWidth: 450, minWidth: 200, margin: 15 }}>
+      <Card
+        onClick={() => {
+          if (data.article === "") {
+            alert("記事がありません！ごめんね！");
+            return;
+          }
+          setDevice(data);
+          acRef.current?.hide();
+        }}
+      >
         <CardActionArea>
           <CardMedia component="img" height="140" image={data.image} />
           <CardContent>
@@ -188,12 +207,10 @@ export function MultiActionAreaCard(props) {
               {data.description}
             </Typography>
           </CardContent>
-        </CardActionArea>
-        <CardActions>
           <Button size="small" color="primary">
             Visit
           </Button>
-        </CardActions>
+        </CardActionArea>
       </Card>
     </View>
   );

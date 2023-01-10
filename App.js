@@ -83,15 +83,7 @@ export default function App() {
   const [deviceListTag, setDeviceListTag] = useState([]);
   const acRef = useRef(null);
   const scrollHandlers = useScrollHandlers("scrollview-1", acRef);
-  useEffect(() => {
-    window.parent.postMessage("ほげ！！", "*");
-    console.log("postメッセージしたよ.0");
-    fetch("https://nexcloud.haruk.in/s/Xxnw4PMBQYceErg/download/main.md", {
-      mode: "cors",
-    })
-      .then((d) => d.text())
-      .then((d) => setMD(d));
-  }, []);
+  const [device, setDevice] = useState(undefined);
   useEffect(() => {
     fetch("https://nexcloud.haruk.in/s/LTFeAq22PgXy5ms/download/mainList.csv", {
       mode: "cors",
@@ -111,6 +103,18 @@ export default function App() {
       ),
     ]);
   }, [deviceList]);
+  useEffect(() => {
+    fetch(
+      device
+        ? device.article
+        : "https://nexcloud.haruk.in/s/Xxnw4PMBQYceErg/download/main.md",
+      {
+        mode: "cors",
+      }
+    )
+      .then((d) => d.text())
+      .then((d) => setMD(d));
+  }, [device]);
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -228,6 +232,7 @@ export default function App() {
         deviceListTag={deviceListTag}
         deviceList={deviceList}
         scrollHandlers={scrollHandlers}
+        control={{ device, setDevice }}
       />
       <View
         style={{
@@ -244,13 +249,19 @@ export default function App() {
           aria-label="delete"
           size="large"
           onClick={() => {
-            window.parent.postMessage("doCloseAction", "*");
-            console.log("アプリを閉じて前に戻る");
+            if (device) {
+              setDevice(undefined);
+            } else {
+              window.parent.postMessage("doCloseAction", "*");
+              console.log("アプリを閉じて前に戻る");
+            }
           }}
         >
           <ArrowBack fontSize="inherit" />
         </IconButton>
-        <Text style={{ flex: 1, textAlign: "center" }}>トップページ</Text>
+        <Text style={{ flex: 1, textAlign: "center" }}>
+          {device ? device.name : "トップページ"}
+        </Text>
         <IconButton
           aria-label="delete"
           size="large"

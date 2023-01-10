@@ -61,7 +61,7 @@ export const DeviceSelectSheet = (props) => {
           backgroundColor: "white",
           borderRadius: 5,
           borderColor: "dark",
-          borderWidth: 1,
+          borderWidth: 0,
         }}
       >
         <View style={{ height: 26, width: "100%" }}>

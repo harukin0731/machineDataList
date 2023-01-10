@@ -60,7 +60,7 @@ import { Switch44 } from "./util/HoloUX/4.4switch";
 import { HorizonalBar } from "./util/HoloUX/horizonalBar";
 import { TitleBar } from "./util/HoloUX/titleBar";
 import { Slider } from "./util/HoloUX/slider";
-import { AllInbox, ArrowBack } from "@mui/icons-material";
+import { AllInbox, ArrowBack, Close } from "@mui/icons-material";
 
 import { styles } from "./styles/styles";
 import { DeviceSelectSheet } from "./components/DeviceSelectSheet";
@@ -165,12 +165,14 @@ export default function App() {
           <View style={{ flex: 1 }} />
           <View
             style={{
-              width: "100%",
+              width: "60vw",
+              maxWidth: 1200,
               alignContent: "center",
               alignItems: "center",
               paddingTop: 30,
             }}
           >
+            {/* 
             <Image
               source={require("./assets/Harukin-main.png")}
               style={{
@@ -203,7 +205,7 @@ export default function App() {
             >
               ここの項目はnextcloudを経由して自動で更新されます。
             </Text>
-            <View style={{ height: 20 }} />
+            <View style={{ height: 20 }} /> */}
 
             <Markdown style={styles}>{md}</Markdown>
           </View>
@@ -257,7 +259,11 @@ export default function App() {
             }
           }}
         >
-          <ArrowBack fontSize="inherit" />
+          {!!device ? (
+            <ArrowBack fontSize="inherit" />
+          ) : (
+            <Close fontSize="inherit" />
+          )}
         </IconButton>
         <Text style={{ flex: 1, textAlign: "center" }}>
           {device ? device.name : "トップページ"}

@@ -170,6 +170,7 @@ export default function App() {
               alignContent: "center",
               alignItems: "center",
               padding: 10,
+              marginTop: 40,
             }}
           >
             {/* 

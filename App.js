@@ -165,11 +165,11 @@ export default function App() {
           <View style={{ flex: 1 }} />
           <View
             style={{
-              width: "60vw",
-              maxWidth: 1200,
+              width: "100%",
+              maxWidth: 1000,
               alignContent: "center",
               alignItems: "center",
-              paddingTop: 30,
+              padding: 10,
             }}
           >
             {/* 
